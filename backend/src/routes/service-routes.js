@@ -7,11 +7,12 @@ import {
   updateService
 } from "../controllers/service-conroller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
-import { userMiddleware } from "../middlewares/user-middleware.js";
+import { optionalAuthMiddleware } from "../middlewares/optionalAuthMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", userMiddleware, getServices);
+router.get("/", optionalAuthMiddleware, getServices);
+
 router.get("/:slug", authMiddleware, getSerivceBySlug);
 
 router.post("/", authMiddleware, createService);
