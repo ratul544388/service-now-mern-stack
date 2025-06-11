@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from "react-router";
 const SearchInput = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate()
-  const [value, setValue] = useState(searchParams.get("search") || "");
+  const [value, setValue] = useState(searchParams.get("q") || "");
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {

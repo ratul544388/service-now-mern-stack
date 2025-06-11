@@ -34,10 +34,11 @@ export const getSerivceBySlug = asyncHandler(async (req, res) => {
 
 // GET services
 export const getServices = asyncHandler(async (req, res) => {
-  const { providerId, take, userId } = req.query;
+  const { providerId, take, userId, q } = req.query;
   if (providerId && providerId !== req?.user.id) {
     return res.status(401).json({ message: "Unauthorized" });
   }
+
   const services = await db.service.findMany({
     where: {
       ...(providerId ? { providerId } : {}),
@@ -47,6 +48,14 @@ export const getServices = asyncHandler(async (req, res) => {
               some: {
                 userId: req.user.id,
               },
+            },
+          }
+        : {}),
+      ...(q
+        ? {
+            title: {
+              contains: q,
+              mode: "insensitive",
             },
           }
         : {}),
@@ -64,7 +73,6 @@ export const getServices = asyncHandler(async (req, res) => {
 
   return res.status(200).json(services);
 });
-
 // CREATE a new Service
 export const createService = asyncHandler(async (req, res) => {
   const values = serviceSchema.parse(req.body);
