@@ -27,6 +27,7 @@ const ServiceDetails = () => {
       <div className="mb-6">
         <Image src={service.imageUrl} alt={service.title} width={500} />
         <h1 className="mt-3 text-3xl font-bold">{service.title}</h1>
+        <p className="mt-1 text-muted-foreground text-sm">{service.category}</p>
         <p className="text-muted-foreground mt-3">{service.description}</p>
         <div className="mt-5 flex items-center gap-3">
           <img
