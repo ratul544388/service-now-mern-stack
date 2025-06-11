@@ -126,7 +126,7 @@ const ServiceForm = ({ service }) => {
         name="description"
         placeholder="Enter Service Description"
       />
-      <LoadingButton disabled={isPending || isUploadingImage}>
+      <LoadingButton isLoading={isPending} disabled={isPending || isUploadingImage}>
         {service ? "Save" : "Create"}
       </LoadingButton>
     </FormWrapper>

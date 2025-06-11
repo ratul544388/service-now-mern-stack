@@ -55,7 +55,7 @@ const BookingForm = ({ onBookingComplete, serviceId }) => {
           placeholder="Enter your address"
           disabled={isPending}
         />
-        <LoadingButton className="mt-5 w-full" disabled={isPending}>
+        <LoadingButton className="mt-5 w-full" isLoading={isPending}>
           Book
         </LoadingButton>
       </form>
