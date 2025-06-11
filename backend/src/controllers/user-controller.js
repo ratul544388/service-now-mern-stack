@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { db } from "../lib/db.js";
 import { asyncHandler } from "../utils/async-handler.js";
-import { updateAuthCookie } from "../utils/update-auth-cookie.js";
 import { updateProfileSchema } from "../validations/index.js";
+import { updateAuthCookie } from "../utils/update-auth-cookie.js";
 
 export const getCurrentUser = asyncHandler((req, res) => {
   const token = req.cookies?.auth_token;
