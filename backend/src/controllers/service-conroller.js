@@ -35,6 +35,7 @@ export const getSerivceBySlug = asyncHandler(async (req, res) => {
 // GET services
 export const getServices = asyncHandler(async (req, res) => {
   const { providerId, take, userId, q } = req.query;
+
   if (providerId && providerId !== req?.user.id) {
     return res.status(401).json({ message: "Unauthorized" });
   }
@@ -53,10 +54,20 @@ export const getServices = asyncHandler(async (req, res) => {
         : {}),
       ...(q
         ? {
-            title: {
-              contains: q,
-              mode: "insensitive",
-            },
+            OR: [
+              {
+                title: {
+                  contains: q,
+                  mode: "insensitive",
+                },
+              },
+              {
+                category: {
+                  contains: q,
+                  mode: "insensitive",
+                },
+              },
+            ],
           }
         : {}),
     },
@@ -73,6 +84,8 @@ export const getServices = asyncHandler(async (req, res) => {
 
   return res.status(200).json(services);
 });
+
+
 // CREATE a new Service
 export const createService = asyncHandler(async (req, res) => {
   const values = serviceSchema.parse(req.body);
