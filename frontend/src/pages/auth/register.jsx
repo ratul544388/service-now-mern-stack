@@ -83,8 +83,8 @@ const Register = () => {
       />
       <ImageUpload
         control={form.control}
-        name="imageUrl (Optional)"
-        label="Image"
+        name="imageUrl"
+        label="Image (Optional)"
         disabled={isPending}
         onUploadStatusChange={setIsUploadingImage}
       />
