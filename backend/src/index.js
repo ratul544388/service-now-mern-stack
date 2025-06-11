@@ -7,26 +7,26 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
 
-import "./lib/passport.js"
+import "./lib/passport.js";
 
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user-routes.js";
 import serviceRoutes from "./routes/service-routes.js";
 import bookingRoutes from "./routes/booking-routes.js";
 
-
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 
-app.use(
-  cors({
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    origin: process.env.VITE_APP_URL,
-    credentials: true,
-  })
-);
+const corsConfig = {
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: process.env.VITE_APP_URL,
+  credentials: true,
+};
+
+app.options("", cors(corsConfig));
+app.use(cors(corsConfig));
 
 app.use(
   session({
