@@ -36,9 +36,13 @@ const ImageUpload = ({
       const formData = new FormData();
       formData.append("image", file);
 
-      const { data } = await axios.post("/api/image-upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/image-upload`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        },
+      );
 
       return { imageUrl: data.imageUrl, onChange };
     },
