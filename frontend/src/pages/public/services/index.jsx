@@ -19,7 +19,7 @@ const Services = () => {
     <>
       <Title>Services</Title>
       <SearchInput />
-      {services.length === 0 && (
+      {!isPending && services.length === 0 && (
         <EmptyState
           title="No Services Found"
           description="We couldn't find any services matching your search. Try adjusting your keywords or filters."
