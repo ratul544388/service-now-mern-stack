@@ -7,7 +7,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   server: {
     proxy: {
-      "/api": "http://localhost:5000",
+      "/api": "https://service-now-mern-stack.vercel.app",
     },
   },
   plugins: [react(), tailwindcss()],
