@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -19,7 +19,8 @@ import GoogleLogin from "./_components/google-login";
 import useAuthStore from "@/hooks/use-auth-store";
 
 const Register = () => {
-  const {setUser} = useAuthStore()
+  const queryClient = useQueryClient();
+  const { setUser } = useAuthStore();
   const navigate = useNavigate();
   const [isUploadingImage, setIsUploadingImage] = useState(false);
 
@@ -38,14 +39,15 @@ const Register = () => {
     mutationFn: async (values) =>
       request({ method: "post", url: "auth/register", data: values }),
     onSuccess: (user) => {
-      setUser(user)
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      setUser(user);
       toast.success("Register Successful");
       navigate("/");
     },
     onError: (error) => handleFormError(form, error),
   });
 
-  form.watch("imageUrl")
+  form.watch("imageUrl");
 
   return (
     <FormWrapper
@@ -54,7 +56,7 @@ const Register = () => {
       title="Create an Account"
       description="Fill in your details to get started"
     >
-      <GoogleLogin/>
+      <GoogleLogin />
       <FormInput
         control={form.control}
         name="name"

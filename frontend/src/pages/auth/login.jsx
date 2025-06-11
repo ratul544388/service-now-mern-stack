@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
@@ -17,6 +17,7 @@ import useAuthStore from "@/hooks/use-auth-store";
 import GoogleLogin from "./_components/google-login";
 
 const Login = () => {
+  const queryClient = useQueryClient();
   const { setUser } = useAuthStore();
   const navigate = useNavigate();
 
@@ -31,6 +32,7 @@ const Login = () => {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (data) => request({ method: "post", url: "auth/login", data }),
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
       setUser(data.user);
       toast.success("Login Successful");
       navigate("/");
@@ -45,7 +47,7 @@ const Login = () => {
       title="Login to Your Account"
       description="Enter your email and password to login"
     >
-      <GoogleLogin/>
+      <GoogleLogin />
       <FormInput
         control={form.control}
         name="email"
@@ -65,7 +67,7 @@ const Login = () => {
           isPending && "pointer-events-none opacity-60",
         )}
       >
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link to="/auth/register" className="text-primary underline">
           Register
         </Link>
