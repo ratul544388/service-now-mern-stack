@@ -79,7 +79,7 @@ const ChangePasswordForm = () => {
         placeholder="Confirm new password"
         disabled={isPending}
       />
-      <LoadingButton>Update Password</LoadingButton>
+      <LoadingButton disabled>Update Password</LoadingButton>
       <FormError error={error} />
     </FormWrapper>
   );

@@ -1,49 +1,39 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import { updateProfile } from "firebase/auth";
 
 import useAuthStore from "@/hooks/use-auth-store";
-import { getFormattedName } from "@/lib/utils";
 import { updateProfileSchema } from "@/validations";
 
-import FormWrapper from "@/components/form-wrapper";
-import FormInput from "@/components/form-input";
 import FormError from "@/components/form-error";
+import FormInput from "@/components/form-input";
+import FormWrapper from "@/components/form-wrapper";
 import LoadingButton from "@/components/loading-button";
+import { request } from "@/lib/request";
+import ImageUpload from "@/components/image-upload";
 
 const UpdateProfileForm = () => {
-  const { currentUser: user } = useAuthStore();
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const { user, setUser } = useAuthStore();
   const navigate = useNavigate();
   const [error, setError] = useState("");
-
-  const { firstName, lastName } = getFormattedName({
-    fullName: user.displayName,
-  });
 
   const form = useForm({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
-      firstName,
-      lastName,
-      imageUrl: user.photoURL || "",
+      name: user?.name,
+      imageUrl: user?.imageUrl || "",
     },
   });
 
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: async (values) => {
-      const { firstName, lastName, imageUrl } = values;
-      const { fullName } = getFormattedName({ firstName, lastName });
-
-      await updateProfile(user, {
-        displayName: fullName,
-        photoURL: imageUrl,
-      });
-    },
-    onSuccess: () => {
+    mutationFn: async (data) =>
+      await request({ method: "put", url: "users/me", data }),
+    onSuccess: (data) => {
+      setUser(data);
       toast.success("Profile updated");
       navigate("/profile");
     },
@@ -61,23 +51,23 @@ const UpdateProfileForm = () => {
     >
       <FormInput
         control={form.control}
-        name="firstName"
-        placeholder="First name"
+        name="name"
+        placeholder="Enter your name"
         disabled={isPending}
       />
-      <FormInput
-        control={form.control}
-        name="lastName"
-        placeholder="Last name"
-        disabled={isPending}
-      />
-      <FormInput
+      <ImageUpload
         control={form.control}
         name="imageUrl"
-        placeholder="Image URL"
+        label="Image"
         disabled={isPending}
+        onUploadStatusChange={setIsUploadingImage}
       />
-      <LoadingButton isLoading={isPending}>Save Changes</LoadingButton>
+      <LoadingButton
+        isLoading={isPending}
+        disabled={isUploadingImage || isPending}
+      >
+        Save Changes
+      </LoadingButton>
       <FormError error={error} />
     </FormWrapper>
   );

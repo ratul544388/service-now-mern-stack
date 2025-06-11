@@ -1,13 +1,13 @@
+import Container from "@/components/container";
+import Title from "@/components/title";
+import { Skeleton } from "@/components/ui/skeleton";
+import useAuthStore from "@/hooks/use-auth-store";
 import { useSearchParams } from "react-router";
+import ChangePasswordForm from "./change-password-form";
+import DeleteAccountForm from "./delete-account-form";
 import Sidebar from "./sidebar";
 import UpdateProfileForm from "./update-profile-form";
 import UserInfo from "./user-info";
-import ChangePasswordForm from "./change-password-form";
-import DeleteAccountForm from "./delete-account-form";
-import Container from "@/components/container";
-import useAuthStore from "@/hooks/use-auth-store";
-import { Skeleton } from "@/components/ui/skeleton";
-import PageTitle from "@/components/title";
 
 const Profile = () => {
   const { loading } = useAuthStore();
@@ -20,7 +20,7 @@ const Profile = () => {
 
   return (
     <Container className="mt-12">
-      <PageTitle>My Profile</PageTitle>
+      <Title>My Profile</Title>
       <div className="bg-background relative mx-auto flex w-full max-w-[800px] justify-center gap-4 overflow-hidden rounded-xl border px-4 py-10 pl-8 shadow-lg sm:pl-4">
         <Sidebar />
         <div className="w-full">
