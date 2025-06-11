@@ -40,8 +40,10 @@ export const UserButton = () => {
           url: "auth/logout",
           onSuccess: () => {
             navigate("/");
-            setUser(null);
-            toast.success("Logged out!");
+            setTimeout(() => {
+              setUser(null);
+              toast.success("Logged out!");
+            }, 200);
           },
         }),
     },
