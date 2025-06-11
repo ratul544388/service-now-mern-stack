@@ -54,7 +54,7 @@ export const serviceSchema = z.object({
 });
 
 export const bookingSchema = z.object({
-  serviceTakingDate: z.date(),
+  serviceTakingDate: z.preprocess((date) => new Date(date), z.date()),
   address: z
     .string({ required_error: "Address is required" })
     .min(5, "Address is too short"),
