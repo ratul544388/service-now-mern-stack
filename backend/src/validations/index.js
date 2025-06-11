@@ -13,9 +13,9 @@ export const registerSchema = z
       .regex(/[A-Z]/, "Password must contain at least one uppercase letter"),
     confirmPassword: requiredString("Confirm Password").min(
       6,
-      "Confirm Password is required",
+      "Confirm Password is required"
     ),
-    imageUrl: z.string().url("Invalid image URL").optional(),
+    imageUrl: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -42,10 +42,12 @@ export const serviceSchema = z.object({
     .min(10, "Description must be at least 10 characters")
     .refine(
       (val) => val.trim().split(/\s+/).length <= 100,
-      "Description must be at most 100 words",
+      "Description must be at most 100 words"
     ),
   price: z.coerce.number().min(1, "Price is required"),
-  imageUrl: z.string().optional(),
+  imageUrl: z
+    .string({ required_error: "Image is required" })
+    .url("Image URL must be a valid URL"),
   category: z.string().min(1, "Category is required"),
   address: z.string({ required_error: "Address is required" }).min(5),
 });

@@ -15,7 +15,7 @@ export const registerSchema = z
       6,
       "Confirm Password is required",
     ),
-    imageUrl: z.string().url("Invalid image URL").optional(),
+    imageUrl: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -45,7 +45,10 @@ export const serviceSchema = z.object({
       "Description must be at most 100 words",
     ),
   price: z.coerce.number().min(1, "Price is required"),
-  imageUrl: z.string().optional(),
+  imageUrl: z
+    .string()
+    .min(1, "Image is required")
+    .url("Image URL must be a valid URL"),
   category: z.string().min(1, "Category is required"),
   address: z.string({ required_error: "Address is required" }).min(5),
 });
