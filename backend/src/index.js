@@ -22,6 +22,7 @@ const app = express();
 
 app.use(
   cors({
+    methods: ["GET", "POST", "PUT", "DELETE"],
     origin: process.env.VITE_APP_URL,
     credentials: true,
   })
