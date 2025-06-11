@@ -58,7 +58,7 @@ const UpdateProfileForm = () => {
       <ImageUpload
         control={form.control}
         name="imageUrl"
-        label="Image"
+        label="Image (Optional)"
         disabled={isPending}
         onUploadStatusChange={setIsUploadingImage}
       />
