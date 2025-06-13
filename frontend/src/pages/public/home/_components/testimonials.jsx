@@ -1,40 +1,66 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import { Marquee, MarqueeItem } from "@/components/marquee"
+import { reviews } from "@/constants";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { motion } from "framer-motion";
 
 const Testimonials = () => {
-  return (
-      <section className="py-20 bg-gray-100 rounded-2xl dark:bg-gray-800">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <motion.h2
-            className="text-3xl font-bold mb-12"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            What Our Users Say
-          </motion.h2>
-          <div className="grid gap-10 md:grid-cols-3">
-            {["Amazing Service!", "Very Reliable.", "Super Easy to Book."].map((quote, i) => (
-              <motion.div
-                key={i}
-                className="bg-white dark:bg-gray-900 rounded-xl shadow p-6"
-                whileHover={{ scale: 1.02 }}
-              >
-                <p className="mb-4 italic text-gray-600 dark:text-gray-300">“{quote}”</p>
-                <div className="flex items-center justify-center gap-3">
-                  <img
-                    src={`https://i.pravatar.cc/30?img=${i + 5}`}
-                    alt="User"
-                    className="w-8 h-8 rounded-full"
-                  />
-                  <span className="text-sm font-medium">User {i + 1}</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-  )
-}
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: async () => {
+      const { data } = await axios.get("https://randomuser.me/api/?results=24");
+      const result = data.results.map((r, i) => ({
+        id: r.login.uuid,
+        username: `@${r.name.first.toLowerCase()}_${r.name.last.toLowerCase()}`,
+        image: r.picture.thumbnail,
+        comment: reviews[i % reviews.length], // Safe loop through reviews
+      }));
 
-export default Testimonials
+      return result;
+    },
+  });
+
+  if (isPending) return <p>Loading testimonials...</p>;
+  if (isError) return <p>Failed to load testimonials.</p>;
+
+  return (
+    <div className="w-full">
+      <motion.h2
+        className="mb-8 text-center text-3xl font-bold"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        What Our Customers Say
+      </motion.h2>
+      <Reviews reviews={data} slice={[1, 8]} />
+      <Reviews reviews={data} slice={[9, 16]} position="right" />
+      <Reviews reviews={data} slice={[17, 24]} />
+    </div>
+  );
+};
+
+const Reviews = ({ reviews, slice, position = "left" }) => {
+  return (
+    <Marquee position={position}>
+      {reviews.slice(...slice).map((user) => (
+        <MarqueeItem
+          key={user.id}
+          className="bg-background flex flex-col gap-5 hover:bg-primary/5 transition-colors w-[300px] rounded-lg border p-5 shadow-md"
+        >
+          <p className="text-sm">{user.comment}</p>
+          <div className="flex items-center gap-3 mt-auto">
+            <img
+              src={user.image}
+              alt={user.username}
+              className="h-10 w-10 rounded-full"
+            />
+            <p className="font-semibold">{user.username}</p>
+          </div>
+        </MarqueeItem>
+      ))}
+    </Marquee>
+  );
+};
+
+export default Testimonials;
