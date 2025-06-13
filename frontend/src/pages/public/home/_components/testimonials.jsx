@@ -1,4 +1,4 @@
-import { Marquee, MarqueeItem } from "@/components/marquee"
+import { Marquee, MarqueeItem } from "@/components/marquee";
 import { reviews } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -20,7 +20,6 @@ const Testimonials = () => {
     },
   });
 
-  if (isPending) return <p>Loading testimonials...</p>;
   if (isError) return <p>Failed to load testimonials.</p>;
 
   return (
@@ -33,6 +32,7 @@ const Testimonials = () => {
       >
         What Our Customers Say
       </motion.h2>
+      {isPending && <span className="loader mx-auto block" />}
       <Reviews reviews={data} slice={[1, 8]} />
       <Reviews reviews={data} slice={[9, 16]} position="right" />
       <Reviews reviews={data} slice={[17, 24]} />
@@ -43,13 +43,13 @@ const Testimonials = () => {
 const Reviews = ({ reviews, slice, position = "left" }) => {
   return (
     <Marquee position={position}>
-      {reviews.slice(...slice).map((user) => (
+      {reviews?.slice(...slice).map((user) => (
         <MarqueeItem
           key={user.id}
-          className="bg-background flex flex-col gap-5 hover:bg-primary/5 transition-colors w-[300px] rounded-lg border p-5 shadow-md"
+          className="bg-background hover:bg-primary/5 flex w-[300px] flex-col gap-5 rounded-lg border p-5 shadow-md transition-colors"
         >
           <p className="text-sm">{user.comment}</p>
-          <div className="flex items-center gap-3 mt-auto">
+          <div className="mt-auto flex items-center gap-3">
             <img
               src={user.image}
               alt={user.username}
