@@ -1,11 +1,11 @@
-import PageLoader from "@/components/page-loader";
+import EmptyState from "@/components/empty-state";
 import ServiceCard from "@/components/service-card";
+import ServiceCardSkeleton from "@/components/skeletons/service-cards.-skeleton";
 import Title from "@/components/title";
 import { request } from "@/lib/request";
 import { useQuery } from "@tanstack/react-query";
-import SearchInput from "./_components/search-input";
 import { useSearchParams } from "react-router";
-import EmptyState from "@/components/empty-state";
+import SearchInput from "./_components/search-input";
 
 const Services = () => {
   const [searchParams] = useSearchParams();
@@ -25,8 +25,8 @@ const Services = () => {
           description="We couldn't find any services matching your search. Try adjusting your keywords or filters."
         />
       )}
-      {isPending && <span className="loader mx-auto block" />}
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {isPending && <ServiceCardSkeleton/>}
+      <ul className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
           <ServiceCard key={service.id} {...service} />
         ))}

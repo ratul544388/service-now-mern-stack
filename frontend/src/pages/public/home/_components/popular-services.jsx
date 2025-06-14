@@ -1,4 +1,5 @@
 import ServiceCard from "@/components/service-card";
+import ServiceCardSkeleton from "@/components/skeletons/service-cards.-skeleton";
 import { request } from "@/lib/request";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -20,7 +21,7 @@ const PopularServices = () => {
       >
         Popular Services
       </motion.h2>
-      {isPending && <span className="loader mx-auto block" />}
+      {isPending && <ServiceCardSkeleton />}
       <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
           <ServiceCard key={service.id} {...service} />
