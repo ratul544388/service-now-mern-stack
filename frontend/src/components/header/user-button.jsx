@@ -23,7 +23,7 @@ export const UserButton = () => {
     return <Skeleton className="size-8 min-w-8 rounded-full" />;
   }
 
-  if(!user) return null;
+  if (!user) return null;
 
   const dropdownItems = [
     {

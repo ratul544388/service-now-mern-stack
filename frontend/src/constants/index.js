@@ -21,13 +21,15 @@ export const navLinks = (user) => [
     href: "/services",
     icon: Leaf,
   },
-  ...(user ? [
-    {
-      label: "My Bookings",
-      icon: CalendarDays,
-      href: "/my-bookings"
-    }
-  ] : [])
+  ...(user
+    ? [
+        {
+          label: "My Bookings",
+          icon: CalendarDays,
+          href: "/my-bookings",
+        },
+      ]
+    : []),
 ];
 
 export const dashboardNavLinks = [
@@ -83,7 +85,7 @@ export const sliderData = [
       "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGxhbnRzfGVufDB8fDB8fHww",
     title: "Smart Plant Care Scheduling",
     description:
-      "Automatically track watering, fertilizing, and care schedules with personalized reminders based on your plant’s unique needs.",
+      "Automatically track watering, fertilizing, and care schedules with personalized reminders based on your plant's unique needs.",
   },
   {
     image:
@@ -103,25 +105,30 @@ export const sliderData = [
 
 export const VITE_API_URL = "http://localhost:5000";
 
-export const SERVICES = [
-  "Home Services",
-  "Cleaning & Maintenance",
-  "Health & Wellness",
-  "Beauty & Personal Care",
-  "Tutoring & Education",
-  "Technology & IT Support",
-  "Event & Party Services",
-  "Automotive Services",
-  "Pet Care",
-  "Fitness & Training",
-  "Legal & Financial Services",
-  "Business Support",
-  "Photography & Videography",
-  "Freelance & Creative Services",
-  "Repair & Handyman",
-  "Travel & Hospitality",
+export const categories = [
+  { label: "Home Services", value: "home-services" },
+  { label: "Cleaning & Maintenance", value: "cleaning-and-maintenance" },
+  { label: "Health & Wellness", value: "health-and-wellness" },
+  { label: "Beauty & Personal Care", value: "beauty-and-personal-care" },
+  { label: "Tutoring & Education", value: "tutoring-and-education" },
+  { label: "Technology & IT Support", value: "technology-and-it-support" },
+  { label: "Event & Party Services", value: "event-and-party-services" },
+  { label: "Automotive Services", value: "automotive-services" },
+  { label: "Pet Care", value: "pet-care" },
+  { label: "Fitness & Training", value: "fitness-and-training" },
+  {
+    label: "Legal & Financial Services",
+    value: "legal-and-financial-services",
+  },
+  { label: "Business Support", value: "business-support" },
+  { label: "Photography & Videography", value: "photography-and-videography" },
+  {
+    label: "Freelance & Creative Services",
+    value: "freelance-and-creative-services",
+  },
+  { label: "Repair & Handyman", value: "repair-and-handyman" },
+  { label: "Travel & Hospitality", value: "travel-and-hospitality" },
 ];
-
 
 export const reviews = [
   "ServiceNow is an amazing platform! I created my own service and within a day, I got my first client. The process is smooth and user-friendly.",
@@ -147,5 +154,5 @@ export const reviews = [
   "I never thought listing my skills would be so easy. ServiceNow helped me find real clients without paying for ads. Great system!",
   "Everything about ServiceNow is well thought out — from the profile setup to messaging. I booked someone for car repair and it went perfectly.",
   "ServiceNow feels like a service marketplace built for real people. No complicated process, just fast, efficient, and trustworthy interactions. Highly recommended!",
-  "I added my photography services on ServiceNow and within two days I had a shoot scheduled. It's been the best experience I've had online."
+  "I added my photography services on ServiceNow and within two days I had a shoot scheduled. It's been the best experience I've had online.",
 ];

@@ -29,7 +29,7 @@ const CancelBooking = ({ service }) => {
   return (
     <>
       <p className="mt-5 text-green-500">
-        You've booked the service. We'll contact you soon.
+        You&apos;ve booked the service. We&apos;ll contact you soon.
       </p>
       <Button
         className="mt-2"

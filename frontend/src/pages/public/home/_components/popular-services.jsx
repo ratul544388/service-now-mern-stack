@@ -8,11 +8,11 @@ import { Link } from "react-router";
 const PopularServices = () => {
   const { data: services = [], isPending } = useQuery({
     queryKey: ["services", "popular"],
-    queryFn: () => request({ url: "services", params: { take: 6 } }),
+    queryFn: () => request({ url: "services", params: { take: 8 } }),
   });
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16">
+    <section className="mx-auto py-16">
       <motion.h2
         className="mb-12 text-center text-3xl font-bold"
         initial={{ opacity: 0 }}
@@ -21,8 +21,8 @@ const PopularServices = () => {
       >
         Popular Services
       </motion.h2>
-      {isPending && <ServiceCardSkeleton />}
-      <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+      {isPending && <ServiceCardSkeleton  className="grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"/>}
+      <ul className="grid sm:gap-5 gap-4 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {services.map((service) => (
           <ServiceCard key={service.id} {...service} />
         ))}

@@ -23,7 +23,7 @@ const SearchInput = () => {
   }, [value, navigate]);
 
   return (
-    <div className="relative mx-auto mb-6 max-w-xl">
+    <div className="relative mx-auto max-w-xl flex-1">
       <Search className="text-muted-foreground absolute top-1/2 left-4 -translate-y-1/2" />
       <Input
         type="search"

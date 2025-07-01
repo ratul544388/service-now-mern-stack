@@ -46,8 +46,7 @@ export const serviceSchema = z.object({
     ),
   price: z.coerce.number().min(1, "Price is required"),
   imageUrl: z
-    .string()
-    .min(1, "Image is required")
+    .string({ required_error: "Image is required" })
     .url("Image URL must be a valid URL"),
   category: z.string().min(1, "Category is required"),
   address: z.string({ required_error: "Address is required" }).min(5),

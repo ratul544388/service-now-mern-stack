@@ -13,7 +13,7 @@ const Testimonials = () => {
         id: r.login.uuid,
         username: `@${r.name.first.toLowerCase()}_${r.name.last.toLowerCase()}`,
         image: r.picture.thumbnail,
-        comment: reviews[i % reviews.length], // Safe loop through reviews
+        comment: reviews[i % reviews.length],
       }));
 
       return result;

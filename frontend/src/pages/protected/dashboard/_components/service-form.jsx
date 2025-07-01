@@ -1,11 +1,10 @@
 import FormInput from "@/components/form-input";
-import FormRichTextEditor from "@/components/form-rich-text-editor";
 import FormSelect from "@/components/form-select";
 import FormTextArea from "@/components/form-text-area";
 import FormWrapper from "@/components/form-wrapper";
 import ImageUpload from "@/components/image-upload";
 import LoadingButton from "@/components/loading-button";
-import { SERVICES } from "@/constants";
+import { categories } from "@/constants";
 import { handleFormError } from "@/lib/handle-form.error";
 import { request } from "@/lib/request";
 import { generateSlug } from "@/lib/utils";
@@ -104,7 +103,7 @@ const ServiceForm = ({ service }) => {
         name="category"
         control={form.control}
         disabled={isPending}
-        options={SERVICES}
+        options={categories.map((c) => c.label)}
         placeholder="Select service category"
       />
       <FormInput
@@ -126,7 +125,10 @@ const ServiceForm = ({ service }) => {
         name="description"
         placeholder="Enter Service Description"
       />
-      <LoadingButton isLoading={isPending} disabled={isPending || isUploadingImage}>
+      <LoadingButton
+        isLoading={isPending}
+        disabled={isPending || isUploadingImage}
+      >
         {service ? "Save" : "Create"}
       </LoadingButton>
     </FormWrapper>

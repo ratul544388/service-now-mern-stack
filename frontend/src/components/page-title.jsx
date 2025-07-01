@@ -1,9 +1,11 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 
-const PageTitle = ({ title }) => {
+const PageTitle = ({ title, className }) => {
   return (
-    <h1 className={cn("text-primary mb-6 text-3xl font-bold")}>{title}</h1>
+    <h1 className={cn("text-primary mb-6 text-3xl font-bold", className)}>
+      {title}
+    </h1>
   );
 };
 

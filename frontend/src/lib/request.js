@@ -1,3 +1,4 @@
+import { VITE_API_URL } from "@/constants";
 import axios from "axios";
 
 export const request = async ({
@@ -12,7 +13,7 @@ export const request = async ({
   try {
     const response = await axios({
       method,
-      url: `${import.meta.env.VITE_API_URL}/api/${url}`,
+      url: `${VITE_API_URL}/api/${url}`,
       data,
       params,
       headers,

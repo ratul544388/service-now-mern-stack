@@ -1,6 +1,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -25,6 +26,9 @@ export const BookServiceButton = ({ service }) => {
         <DialogContent className="max-h-[100dvh] overflow-y-auto sm:max-h-[85dvh] sm:max-w-[600px]">
           <DialogHeader>
             <DialogTitle>Confirm Booking</DialogTitle>
+            <DialogDescription className="hidden">
+              Description
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-6">
             <Image
