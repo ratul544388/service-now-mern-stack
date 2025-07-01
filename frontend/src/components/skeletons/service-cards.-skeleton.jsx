@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 const ServiceCardSkeleton = ({ className }) => {
   return (
-    <div className={cn("grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3", className)}>
+    <div className={cn("grid grid-cols-2 gap-4 sm:gap-5", className)}>
       {Array.from({ length: 6 }).map((_, i) => (
         <div key={i} className="overflow-hidden rounded-xl shadow-md">
           <Skeleton className="h-[200px] w-full rounded-none" />
