@@ -8,6 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "https://service-now-mern-stack.vercel.app",
+      // "/api": "http://localhost:5000",
     },
   },
   plugins: [react(), tailwindcss()],
