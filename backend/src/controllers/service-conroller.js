@@ -1,6 +1,7 @@
 import { db } from "../lib/db.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import { serviceSchema } from "../validations/index.js";
+import { categories as _categories } from "../constants/index.js";
 
 // GET service by ID
 export const getSerivceBySlug = asyncHandler(async (req, res) => {
@@ -34,11 +35,13 @@ export const getSerivceBySlug = asyncHandler(async (req, res) => {
 
 // GET services
 export const getServices = asyncHandler(async (req, res) => {
-  const { providerId, take, userId, q } = req.query;
+  const { providerId, take, userId, categories, price, q } = req.query;
 
   if (providerId && providerId !== req?.user.id) {
     return res.status(401).json({ message: "Unauthorized" });
   }
+
+  const _price = Number.isNaN(parseInt(price)) ? 0 : parseInt(price);
 
   const services = await db.service.findMany({
     where: {
@@ -49,6 +52,22 @@ export const getServices = asyncHandler(async (req, res) => {
               some: {
                 userId: req.user.id,
               },
+            },
+          }
+        : {}),
+      ...(_price
+        ? {
+            price: {
+              lte: _price,
+            },
+          }
+        : {}),
+      ...(categories
+        ? {
+            category: {
+              in: _categories
+                .filter((c) => categories.split("+").includes(c.value))
+                .map((item) => item.label),
             },
           }
         : {}),
@@ -84,7 +103,6 @@ export const getServices = asyncHandler(async (req, res) => {
 
   return res.status(200).json(services);
 });
-
 
 // CREATE a new Service
 export const createService = asyncHandler(async (req, res) => {
