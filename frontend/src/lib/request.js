@@ -13,7 +13,7 @@ export const request = async ({
   try {
     const response = await axios({
       method,
-      url: `${VITE_API_URL}/api/${url}`,
+      url: `${import.meta.env.VITE_API_URL}/api/${url}`,
       data,
       params,
       headers,
