@@ -33,6 +33,7 @@ export const updateAuthCookie = (updatedData, req, res) => {
       secure: process.env.NODE_ENV === "production",
       maxAge: expiresInMs,
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+      domain: ".vercel.app",
     });
   } catch (err) {
     console.error("Failed to update auth cookie:", err);
